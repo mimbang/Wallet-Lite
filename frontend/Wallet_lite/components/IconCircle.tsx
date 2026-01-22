@@ -29,16 +29,35 @@ type Props = {
     amount: number;
     iconName: string;
 };
-
-export default function SimpleCard({ label, amount, iconName }: Props) {
+type SimpleCardProps = {
+  name: string;
+  icon?: string | null;
+  total: number;
+};
+export default function SimpleCard({ iconName,label,amount }: Props) {
     return (
     <View style={[styles.container,{flexDirection:"column", }]}>
         <View style={{alignItems:"center",flexDirection:"row"}}>
-           <MaterialIcons name={iconName} size={40} color="#2ecc71" />
+           <MaterialIcons name={iconName || "money-off"} size={40} color="#2ecc71" />
             <Text style={[TextType.secondaire]}>{label}</Text>
         </View>
       <View>
       <Text style={styles.amount}>{amount} €</Text>
+      </View>
+    </View>
+  );
+
+
+
+}export  function SimpleCardTest({ name,icon,total }: SimpleCardProps) {
+    return (
+    <View style={[styles.container,{flexDirection:"column", }]}>
+        <View style={{alignItems:"center",flexDirection:"row"}}>
+           <MaterialIcons name={icon || "money-off"} size={40} color="#2ecc71" />
+            <Text style={[TextType.secondaire]}>{name}</Text>
+        </View>
+      <View>
+      <Text style={styles.amount}>{total} €</Text>
       </View>
     </View>
   );

@@ -50,12 +50,11 @@ export default function TransactionsList({
 
             <View style={{width: 2,height: "80%",backgroundColor: "#000000ff",margin:10,}}/>
 
-              <Text style={TextType.secondaire}> CATEGORY</Text>
+              <Text style={{fontWeight:"bold"}}> CATEGORY</Text>
 
 
-            <View style={{width: 2,height: "80%",backgroundColor: "#000000ff",margin:10,}}/>
-          
-
+            <View style={{width: 2,height: "80%",backgroundColor: "#000000ff",margin:30,}}/>
+    
           <Text
             style={[
               styles.amount,
@@ -71,12 +70,60 @@ export default function TransactionsList({
 }
 
 
+export function TransactionItem (item:any){
+
+
+
+
+  return(
+
+    <View style={styles.row}>
+          <MaterialIcons style={{margin:20,}}
+            name={
+              item.category === "Transport"
+                ? "local-taxi"
+                : item.category === "Food"
+                ? "restaurant"
+                : "attach-money"
+            }
+            size={30}
+            color="#3498db"
+            />
+          {/* <AntDesign name="money-collect" size={24} color="black" /> */}
+          {/* <MaterialIcons name="health-and-safety" size={24} color="black" /> */}
+          {/* <MaterialIcons name="emoji-transportation" size={24} color="black" /> */}
+
+          <View style={styles.textContainer}>
+            <Text style={TextType.Titre}>{item.title} </Text>
+            <Text style={styles.category}>{item.category}</Text>
+          </View>
+
+            <View style={{width: 2,height: "80%",backgroundColor: "#000000ff",margin:10,}}/>
+
+              <Text style={{fontWeight:"bold"}}> CATEGORY</Text>
+
+
+            <View style={{width: 2,height: "80%",backgroundColor: "#000000ff",margin:30,}}/>
+    
+          <Text
+            style={[
+              styles.amount,
+              { color: item.amount < 0 ? "#e74c3c" : "#2ecc71" },
+            ]}
+            >
+            {item.amount} €
+          </Text>
+        </View>
+)
+}
+
+
 
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent:"space-between",
-    height:80,
+    height:"auto",
     width:"100%",
     alignItems: "center",
     // paddingVertical: 12,
@@ -85,7 +132,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: "auto",
   },
   title: {
     fontWeight: "600",

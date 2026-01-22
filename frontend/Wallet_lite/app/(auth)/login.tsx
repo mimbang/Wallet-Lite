@@ -3,7 +3,7 @@ import { auth } from "@/firebase/config";
 import { useRouter } from "expo-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { Alert, Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { styles } from "./style";
 import React from "react";
@@ -22,27 +22,33 @@ export default function Login() {
   const router = useRouter();
 
   const handleLogin = async () => {
+    setIsLoading(true)
     if (!email || !password) {
       Alert.alert("Erreur", "Remplissez tous les champs");
       return;
     }
+    if (Isloading){
+      return <ActivityIndicator color={"red"} size={"large"} />
+    }
 
     try {
+      setIsLoading(true)
         
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
     //   setUser(userCredential.user);       // met à jour le contexte
       console.log("Utilisateur inscrit avec l'UID :", userCredential.user.email,);
       Alert.alert("bienvenue",JSON.stringify(userCredential.user.email));   
         // navigation après login
-      console.log('====================================');
       router.push("../(tabs)/home");
-      console.log("navgaition vers le home page ");
-      console.log('====================================');// router.push("./(tabs)/home/index");
+     ;// router.push("./(tabs)/home/index");
       
     } catch (error: any) {
       Alert.alert("Erreur", error.message);
       console.warn("erreur",error);
+      setIsLoading(false)
       
+    } finally {
+      setIsLoading(false)
     }
 
   };

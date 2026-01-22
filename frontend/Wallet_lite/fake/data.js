@@ -30,3 +30,15 @@ export const compareData = {
     expense: 1100,
   },
 };
+
+export const incomeTest =  [
+  {"amount": 500, "category": "Food", "date": "2026-01-19T13:05:13.931Z", "icon": "Food", "id": 245, "type": "income"},
+  {"amount": 500, "category": "Food", "date": "2026-01-19T13:05:14.043Z", "icon": "Food", "id": 246, "type": "income"}, 
+  {"amount": 500, "category": "Food", "date": "2026-01-19T13:05:33.780Z", "icon": "Food", "id": 247, "type": "income"}, 
+  {"amount": 500, "category": "Food", "date": "2026-01-19T13:05:33.894Z", "icon": "Food", "id": 248, "type": "income"}, 
+  {"amount": 500, "category": "Food", "date": "2026-01-19T13:05:47.668Z", "icon": "Food", "id": 249, "type": "income"}, 
+  {"amount": 500, "category": "Food", "date": "2026-01-19T13:05:47.773Z", "icon": "Food", "id": 250, "type": "income"}, 
+  {"amount": 500, "category": "Food", "date": "2026-01-19T13:06:07.732Z", "icon": "Food", "id": 251, "type": "income"}, 
+  {"amount": 500, "category": "Food", "date": "2026-01-19T13:06:07.840Z", "icon": "Food", "id": 252, "type": "income"}, 
+  {"amount": 500, "category": "Food", "date": "2026-01-19T13:06:26.279Z", "icon": "Food", "id": 253, "type": "income"}
+]

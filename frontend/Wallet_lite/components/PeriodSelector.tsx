@@ -3,7 +3,7 @@ import { useState } from 'react';
 import React from 'react';
 // import { styles } from './style';
 
-export default function PeriodSelector ()  {
+export default function PeriodSelector ( period:string)  {
     const [selectedPeriod, setSelectedPeriod] = useState('month');
 
     return (
@@ -63,5 +63,7 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         borderBottomWidth: 2,
         borderBottomColor: '#007AFF',
+        backgroundColor:"red",
+        // borderRadius:"10%",
     },
 });

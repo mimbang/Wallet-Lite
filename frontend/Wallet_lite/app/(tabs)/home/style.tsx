@@ -10,7 +10,8 @@ export const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#049fffff',
         paddingVertical:40,
-        height:"100%",
+        // height:"100%",
+        height:"auto"
 
         
     },

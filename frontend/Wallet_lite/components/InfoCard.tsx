@@ -1,14 +1,54 @@
 import { View, Text, StyleSheet } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProcessCard from "./ProgressCard";
+import { incomeTest } from "@/fake/data";
+import {  initDB } from "@/services/database";
+import { Transaction } from "@/app/(tabs)/home";
+import { fetchAllTransactionsdata } from "@/services/transacation";
 
 export default function InfoCard() {
-  const income = 120000;
-  const expense = 78000;
-  const savingPercent = Math.round(
-    ((income - expense) / income) * 100
-  );
+  const [income,setIncome] = useState<number>(0)
+  const [expense,setExpense] = useState<number>(0)
+  const [balance,setBalance] = useState<number>(0)
+  const [savingPercent,setSavingPercent] = useState<number>(0)
+
+
+ useEffect(() => {
+  async function load() {
+    const data = await fetchAllTransactionsdata();
+
+    if (typeof data !== "string") {
+      const incomeValue = data.total_income;
+      const expenseValue = data.total_expense;
+      const balanceValue = data.total_balance;
+
+      setIncome(incomeValue);
+      setExpense(expenseValue);
+      setBalance(balanceValue);
+
+      let percent = 0;
+      if (incomeValue > 0) {
+        percent = Math.round(
+          ((incomeValue - expenseValue) / incomeValue) * 100
+        );
+      }
+
+      setSavingPercent(percent);
+
+    }
+  }
+
+  load();
+}, []);
+
+
+
+ 
+
+
+
+  // const income
 
   return (
     <View style={styles.card}>
