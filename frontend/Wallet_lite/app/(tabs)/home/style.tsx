@@ -10,19 +10,18 @@ export const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#049fffff',
         paddingVertical:40,
-        // height:"100%",
-        height:"auto"
+        height:"100%",
 
         
     },
     formContainer: {
     backgroundColor: "#ffff",
     // height: 0.9 *height, // équivalent à h-screen arrondi
-    height:"auto",
+    height:"100%",
 
     // justifyContent:"center",
     alignItems:"center",
-    borderTopLeftRadius: "15%",
+    borderTopLeftRadius: "20%",
     borderTopRightRadius: "15%",
     // paddingTop: 20,
     

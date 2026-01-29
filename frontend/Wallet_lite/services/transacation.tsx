@@ -35,7 +35,7 @@ export const getStatsByPeriod = async (period: 'daily' | 'weekly' | 'monthly') =
 
 
 // fonction qui renvoie les donnes pour les graphiques
-export const getChartData = async (period:  'weekly' | 'monthly') => {
+export const getChartData = async (period:  'weekly' | 'monthly'|'day') => {
     if(Platform.OS === "web"){
       return "NO SQl in WEB";
     }
@@ -153,4 +153,31 @@ export const GetSimpleCardata = async (params: string) => {
     total: result[0].total,
   };
 };
+export const GetSmallTransac = async (period: "day" | "week" | "month") => {
+  if (Platform.OS === "web") {
+    return null;
+  }
 
+  const db = await openDB();
+
+  const sql = `
+    SELECT 
+      T.id AS id,
+      C.name AS title,
+      CASE 
+        WHEN C.type = 'expense' THEN -T.amount
+        ELSE T.amount
+      END AS amount,
+      C.icon AS category,
+      date AS date ,
+      C.type AS type
+    FROM transactions T
+    JOIN categories C ON T.category_id = C.id
+    WHERE date(T.date) >= date('now', 'start of ${period}')
+    ORDER BY T.date DESC
+    LIMIT 10
+  `;
+
+  const result = await db.getAllAsync(sql);
+  return result;
+};

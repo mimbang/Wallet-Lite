@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { styles } from './style';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -10,9 +10,15 @@ import { useRouter } from 'expo-router';
 import { compareData } from '@/fake/data';
 
 
+
+type Period = "day" | "week" | "month";
 const screenWidth = Dimensions.get("window").width;
 
 export default function HomeScreen() {
+  const [period, setPeriod] = useState<Period>("month");
+
+
+
     const router = useRouter();
     return (
         <ScrollView showsHorizontalScrollIndicator={false} >
@@ -44,7 +50,8 @@ export default function HomeScreen() {
 
             <View style={styles.formContainer}>
               
-                      <PeriodSelector/>
+                      <PeriodSelector period={period}
+        onChange={setPeriod}/>
                       <View>
       {/* <BarChart style={{marginVertical: 18, borderRadius: 16,margin:20,padding:50,}}   
         data={{

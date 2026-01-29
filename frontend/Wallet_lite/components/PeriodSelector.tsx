@@ -1,9 +1,14 @@
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import React from 'react';
 // import { styles } from './style';
 
-export default function PeriodSelector ( period:string)  {
+type PeriodSelectorProps = {
+  period: "day" | "week" | "month";
+  onChange: (p: "day" | "week" | "month") => void;
+};
+
+export default function PeriodSelector ( {period, onChange }: PeriodSelectorProps)  {
     const [selectedPeriod, setSelectedPeriod] = useState('month');
 
     return (
@@ -11,17 +16,19 @@ export default function PeriodSelector ( period:string)  {
 
           <View >
             <View style={styles.periodSelector}>
-                {['semaine', 'mois', 'année'].map((period) => (
-                    <Text
-                        key={period}
+                {["day" ,"week" ,"month"].map((p) => (
+                    <TouchableOpacity
                         style={[
                             styles.periodButton,TextType.secondaire,
-                            selectedPeriod === period && styles.periodButtonActive,
+                            p === period && styles.periodButtonActive,
                         ]}
-                        onPress={() => setSelectedPeriod(period)}
+                        key={p}
+                        onPress={() => onChange(p)}
                     >
-                        {period.charAt(0).toUpperCase() + period.slice(1)}
-                    </Text>
+                        <Text style={TextType.secondaire}>
+                        {p.charAt(0).toUpperCase() + p.slice(1)}
+                        </Text>
+                    </TouchableOpacity>
                 ))}
                 
            
@@ -62,8 +69,8 @@ export const styles = StyleSheet.create({
         color: '#007AFF',
         fontWeight: 'bold',
         borderBottomWidth: 2,
-        borderBottomColor: '#007AFF',
-        backgroundColor:"red",
-        // borderRadius:"10%",
+        fontSize:18,
+        backgroundColor:"#007AFF",
+        
     },
 });

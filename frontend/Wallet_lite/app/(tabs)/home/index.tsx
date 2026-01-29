@@ -8,7 +8,7 @@ import PeriodSelector from '@/components/PeriodSelector';
 import TransactionsList from '@/components/TransactionList';
 import { transactionsData } from '@/fake/data';
 import { deleteDatabase, fetchTransactions,  initDB, insertCategory, insertTransaction } from '@/services/database';
-import { GetSimpleCardata, QuickInfoData } from '@/services/transacation';
+import { getChartData, GetSimpleCardata, GetSmallTransac, QuickInfoData } from '@/services/transacation';
 
 
 export type Transaction = {
@@ -22,6 +22,7 @@ export type Transaction = {
 };
 
 type Period = "day" | "week" | "month";
+
 
 // 
 export default function HomeScreen() { 
@@ -61,7 +62,11 @@ const [period, setPeriod] = useState<Period>("month");
         const Simpledatavalue = SimpleData
         setCard(Simpledatavalue)   
         
-        const data = await 
+        const data = await GetSmallTransac(period)
+        console.log("data ",data)
+        setTransactions(data)
+      
+        
 
       }
       
@@ -130,7 +135,7 @@ const [period, setPeriod] = useState<Period>("month");
 
 
     return (
-        <ScrollView showsHorizontalScrollIndicator={false} >
+        <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{height:"auto"}} >
 
         <View style={styles.container}>
             <View style={styles.headerContain}>
@@ -182,29 +187,10 @@ const [period, setPeriod] = useState<Period>("month");
 
                 </View>
 
-                <View>
-
-
-                  <View style={{ flexDirection: "row" }}>
-
-                      {["day", "week", "month"].map((p) => (
-                           <Pressable key={p} onPress={() => setPeriod(p)} >    
-                             <Text style={{ fontWeight: period === p ? "bold" : "normal" }}>  {p}</Text>
-                           </Pressable>
-                        ))}
-                       
-                   </View>
-                    <View>
-                          <Text> {period}</Text>
-                    </View>
-                        {Transactions.map((t) => (
-        <Text key={t.id}>{t.amount} FC</Text>
-      ))}
-                </View>
-
                
-                      {/* <PeriodSelector/> */}
-                     {/* <TransactionsList transactions={transactionsData} /> */}
+                      <PeriodSelector  period={period}
+        onChange={setPeriod}/>
+                     <TransactionsList period={period} />
                 
 
             </View>
