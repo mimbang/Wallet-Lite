@@ -63,7 +63,6 @@ const [period, setPeriod] = useState<Period>("month");
         setCard(Simpledatavalue)   
         
         const data = await GetSmallTransac(period)
-        console.log("data ",data)
         setTransactions(data)
       
         

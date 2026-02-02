@@ -35,7 +35,7 @@ export const getStatsByPeriod = async (period: 'daily' | 'weekly' | 'monthly') =
 
 
 // fonction qui renvoie les donnes pour les graphiques
-export const getChartData = async (period:  'weekly' | 'monthly'|'day') => {
+export const getChartData = async (period:  "day" | "week" | "month") => {
     if(Platform.OS === "web"){
       return "NO SQl in WEB";
     }

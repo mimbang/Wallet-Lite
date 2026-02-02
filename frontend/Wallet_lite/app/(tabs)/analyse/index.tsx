@@ -1,116 +1,124 @@
-import React, { use, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import { styles } from './style';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import InfoCard from '@/components/InfoCard';
-import SimpleCard, { TaxiCircle } from '@/components/IconCircle';
-import PeriodSelector from '@/components/PeriodSelector';
-import { BarChart } from "react-native-chart-kit";
-import { useRouter } from 'expo-router';
-import { compareData } from '@/fake/data';
+import InfoCard from "@/components/InfoCard";
+import { PeriodSelector2 } from "@/components/PeriodSelector";
+import { getChartStats } from "@/services/stats";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { styles } from "./style";
+import {BarChart} from 'react-native-chart-kit'
+import StatsChart from "@/components/StatsComponents";
 
 
+type Period = 'week' | 'month' | 'year';
 
-type Period = "day" | "week" | "month";
-const screenWidth = Dimensions.get("window").width;
+type ChartRow = {
+  label: string;
+  income: number;
+  expense: number;
+};
 
 export default function HomeScreen() {
+  const screenWidth = 250 ;
   const [period, setPeriod] = useState<Period>("month");
+  const [ChartData, setChartdata] = useState({
+    labels: [],
+    datasets: [
+      { data: [] },
+      { data: [] }
+    ],
+    legend: ["income", "expense"],
+  });
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const Getdata = async () => {
+      try {
+        setLoading(true);
+        const data = await getChartStats(period);
+        console.log("stats data", data);
+        
+        const FormatForbarchart = (data) => {
+          // Vérifier si data est valide
+          if (!data || data.length === 0) {
+            return {
+              labels: [],
+              datasets: [
+                { data: [] },
+                { data: [] }
+              ],
+              legend: ["income", "expense"],
+            };
+          }
 
+          return {
+            labels: data.map(item => item.label || "N/A"),
+            datasets: [
+              {
+                data: data.map(item => item.income || 0),
+              },
+              {
+                data: data.map(item => item.expense || 0),
+              },
+            ],
+            legend: ["income", "expense"],
+          };
+        };
 
-    const router = useRouter();
-    return (
-        <ScrollView showsHorizontalScrollIndicator={false} >
-
-        <View style={styles.container}>
-            <View style={styles.headerContain}>
-                <View style={styles.angleContainer}>
-
-                    <View >
-                <TouchableOpacity onPress={() => {router.push('/(tabs)/home')}}>
-                    <MaterialIcons name='arrow-back' size={24} color={"white"}/>
-                </TouchableOpacity>
-                    </View>
-
-                    <View>
-                        <TouchableOpacity>
-                        <MaterialIcons name='circle-notifications' size={40} color={"white"}/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-
-            <View style={styles.InfoContainer}>
-                
-                <InfoCard/>
-            </View>
-            </View>
-
-
-            <View style={styles.formContainer}>
-              
-                      <PeriodSelector period={period}
-        onChange={setPeriod}/>
-                      <View>
-      {/* <BarChart style={{marginVertical: 18, borderRadius: 16,margin:20,padding:50,}}   
-        data={{
-          labels: ["Taxi", "Food", "Salaire"],
+        setChartdata(FormatForbarchart(data));
+      } catch (error) {
+        console.error("Erreur lors du chargement des données:", error);
+        // Garder les données vides au lieu de crasher
+        setChartdata({
+          labels: [],
           datasets: [
-            {
-              data: [30, 120, 600],
-            },
+            { data: [] },
+            { data: [] }
           ],
-        }}
-        width={screenWidth - 40}
-        height={250}
-        yAxisLabel="€"
-        chartConfig={{
-          backgroundColor: "#fff",
-          backgroundGradientFrom: "#fff",
-          backgroundGradientTo: "#fff",
-          decimalPlaces: 0,
-          color: () => "#3498db",
-          labelColor: () => "#000",
-        }}
-        style={{
-          borderRadius: 16,
-        }}
-      /> */}
+          legend: ["income", "expense"],
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    Getdata();
+  }, [period]);
 
-            <BarChart
-        data={{
-          labels: ["Entrées", "Dépenses"],
-          datasets: [
-            {
-              data: [compareData.Jour.expense,compareData.Jour.income],
-            },
-          ],
-        }}
-        width={screenWidth - 40}
-        height={220}
-        yAxisLabel="€"
-        fromZero
-        chartConfig={{
-          backgroundGradientFrom: "#fff",
-          backgroundGradientTo: "#fff",
-          decimalPlaces: 0,
-          color: (opacity = 0.5) => `rgba(52, 152, 219, ${opacity})`,
-          labelColor: () => "#000",
-        }}
-        style={{
-          borderRadius: 16,
-        }}
-      />
+  const router = useRouter();
 
-    </View>
-                
+  if (loading) {
+    return <ActivityIndicator color={"black"} size={"large"} />;
+  }
+
+  return (
+    <ScrollView showsHorizontalScrollIndicator={false}>
+      <View style={styles.container}>
+        <View style={styles.headerContain}>
+          <View style={styles.angleContainer}>
+            <View>
+              <TouchableOpacity onPress={() => {router.push('/(tabs)/home')}}>
+                <MaterialIcons name='arrow-back' size={24} color={"white"}/>
+              </TouchableOpacity>
             </View>
-           
+            <View>
+              <TouchableOpacity>
+                <MaterialIcons name='circle-notifications' size={40} color={"white"}/>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.InfoContainer}>
+            <InfoCard/>
+          </View>
         </View>
 
-        </ScrollView>
+        <View style={styles.formContainer}>
+          <PeriodSelector2 period={period} onChange={setPeriod}/>
 
-    );
+          <StatsChart period={period}/>
+        </View>
+      </View>
+    </ScrollView>
+  );
 }
-

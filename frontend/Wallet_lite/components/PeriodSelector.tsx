@@ -74,3 +74,40 @@ export const styles = StyleSheet.create({
         
     },
 });
+
+
+type PeriodSelectorProps2 = {
+  period:  "week" | "month"|"year";
+  onChange: (p:  | "week" | "month"| "year") => void;
+};
+export  function PeriodSelector2 ( {period, onChange }: PeriodSelectorProps2)  {
+    const [selectedPeriod, setSelectedPeriod] = useState('month');
+
+    return (
+        <View style={styles.container}>
+
+          <View >
+            <View style={styles.periodSelector}>
+                {[,"week" ,"month","year"].map((p) => (
+                    <TouchableOpacity
+                        style={[
+                            styles.periodButton,TextType.secondaire,
+                            p === period && styles.periodButtonActive,
+                        ]}
+                        key={p}
+                        onPress={() => onChange(p)}
+                    >
+                        <Text style={TextType.secondaire}>
+                        {p.charAt(0).toUpperCase() + p.slice(1)}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+                
+           
+            </View>
+
+          </View>
+          <View style={{height: 2, backgroundColor: '#000000ff', width: "100%", marginVertical: 10}} />
+        </View>
+    );
+}
