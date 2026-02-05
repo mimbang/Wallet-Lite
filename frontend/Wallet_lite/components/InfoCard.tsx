@@ -64,7 +64,7 @@ export default function InfoCard() {
           </View>
           <View>
           <Text style={{ fontSize: 18,
-    fontWeight: "bold",color:"green"}}>{income} FC</Text>
+    fontWeight: "bold",color:"green"}}>{income || 0} FC</Text>
           </View>
         </View>
 
@@ -79,7 +79,7 @@ export default function InfoCard() {
 
           <View>
           <Text style={{ fontSize: 18,
-    fontWeight: "bold",color:"red"}}>{expense} FC</Text>
+    fontWeight: "bold",color:"red"}}>{expense || 0} FC</Text>
           </View>
         </View>
 

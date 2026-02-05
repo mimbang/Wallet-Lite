@@ -14,6 +14,24 @@ export const openDB = () => {
   if (!db) {
     db = SQLite.openDatabaseSync("wallet_lite.db");
   }
+  db.execAsync(`
+    CREATE TABLE IF NOT EXISTS categories (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  type TEXT,
+  icon TEXT
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  amount REAL,
+  category_id INTEGER,
+  date TEXT,
+  description TEXT,
+  FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+`)
   return db;
 };
 

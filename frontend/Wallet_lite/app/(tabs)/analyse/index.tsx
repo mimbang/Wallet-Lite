@@ -37,46 +37,10 @@ export default function HomeScreen() {
         setLoading(true);
         const data = await getChartStats(period);
         console.log("stats data", data);
-        
-        const FormatForbarchart = (data) => {
-          // Vérifier si data est valide
-          if (!data || data.length === 0) {
-            return {
-              labels: [],
-              datasets: [
-                { data: [] },
-                { data: [] }
-              ],
-              legend: ["income", "expense"],
-            };
-          }
-
-          return {
-            labels: data.map(item => item.label || "N/A"),
-            datasets: [
-              {
-                data: data.map(item => item.income || 0),
-              },
-              {
-                data: data.map(item => item.expense || 0),
-              },
-            ],
-            legend: ["income", "expense"],
-          };
-        };
-
-        setChartdata(FormatForbarchart(data));
       } catch (error) {
         console.error("Erreur lors du chargement des données:", error);
         // Garder les données vides au lieu de crasher
-        setChartdata({
-          labels: [],
-          datasets: [
-            { data: [] },
-            { data: [] }
-          ],
-          legend: ["income", "expense"],
-        });
+       
       } finally {
         setLoading(false);
       }
@@ -87,9 +51,9 @@ export default function HomeScreen() {
 
   const router = useRouter();
 
-  if (loading) {
-    return <ActivityIndicator color={"black"} size={"large"} />;
-  }
+  // if (loading) {
+  //   return <ActivityIndicator color={"black"} size={"large"} />;
+  // }
 
   return (
     <ScrollView showsHorizontalScrollIndicator={false}>

@@ -102,24 +102,23 @@ export const getChartData2 = async (period: Period): Promise<ChartRow[] | string
 };
 
 export async function getChartStats(period) {
-  let groupBy = '';
-  let cmd = '-1 month'
+  let groupBy;
+  let cmd;
 
   if (period === 'week') {
     groupBy = "DATE(t.date)";
-    cmd = '-6 days'
-  }
-
-  if (period === 'month') {
+    cmd = '-6 days';
+  } else if (period === 'month') {
     groupBy = "strftime('%W', t.date)";
-    cmd = '-1 month'
-
-  }
-
-  if (period === 'year') {
+    cmd = '-1 month';
+  } else if (period === 'year') {
     groupBy = "strftime('%m', t.date)";
-    cmd = '-1 year'
+    cmd = '-1 year';
+  } else {
+    throw new Error('Invalid period');
   }
+
+  const db = openDB();
 
   const rows = await db.getAllAsync(`
     SELECT
@@ -128,14 +127,14 @@ export async function getChartStats(period) {
       SUM(CASE WHEN c.type = 'expense' THEN t.amount ELSE 0 END) AS expense
     FROM transactions t
     JOIN categories c ON c.id = t.category_id
-    WHERE T.date >= date('now', ${cmd})
+    WHERE t.date >= date('now', '${cmd}')
     GROUP BY label
-    ORDER BY label`
-  );
+    ORDER BY label
+  `);
 
   return rows.map(r => ({
     label: r.label,
-    income: r.income || 0,
-    expense: r.expense || 0
+    income: r.income ?? 0,
+    expense: r.expense ?? 0
   }));
 }

@@ -1,3 +1,4 @@
+import { StyleSheet } from "react-native"
 
 
 export const  Color = {
@@ -10,28 +11,31 @@ export const  Color = {
 
 }
 
-export const TextType = {
-    Titre:{
-       fontSize:24,
+export const TextType =StyleSheet.create(
+
+    {
+        Titre:{
+            fontSize:24,
       fontFamily:"sans-serif",
       fontWeight:"bold",
       color:"#000",
     },  
-
+    
     primaire:{ 
-       fontSize: 20,
-       fontWeight: "bold",
-       color:"#0000"
+        fontSize: 20,
+        color:"#0000",
+        fontWeight:600
     },
-
+    
     secondaire:{ 
-       fontSize: 18,
+        fontSize: 18,
         fontWeight: "bold",
-       color:"#0000"
+        color:"#0000"
     },
-
+    
 }
 
+)
 export const Padding = {
     horizontal:15,
     vertical:15 
