@@ -42,3 +42,30 @@ export const incomeTest =  [
   {"amount": 500, "category": "Food", "date": "2026-01-19T13:06:07.840Z", "icon": "Food", "id": 252, "type": "income"}, 
   {"amount": 500, "category": "Food", "date": "2026-01-19T13:06:26.279Z", "icon": "Food", "id": 253, "type": "income"}
 ]
+
+
+
+export const categories = [
+  { id: 1, name: "Alimentation", type: "expense", icon: "restaurant" },
+  { id: 2, name: "Transport", type: "expense", icon: "directions-car" },
+  { id: 3, name: "Logement", type: "expense", icon: "home" },
+  { id: 4, name: "Santé", type: "expense", icon: "local-hospital" },
+  { id: 5, name: "Loisirs", type: "expense", icon: "sports-esports" },
+  { id: 6, name: "Shopping", type: "expense", icon: "shopping-cart" },
+  { id: 7, name: "Factures", type: "expense", icon: "receipt" },
+  { id: 8, name: "Education", type: "expense", icon: "school" },
+  { id: 9, name: "Voyages", type: "expense", icon: "flight" },
+  { id: 10, name: "Cadeaux", type: "expense", icon: "card-giftcard" },
+  { id: 11, name: "Animaux", type: "expense", icon: "pets" },
+  { id: 12, name: "Investissements", type: "income", icon: "trending-up" },
+  { id: 13, name: "Salaire", type: "income", icon: "attach-money" },
+  { id: 14, name: "Dividendes", type: "income", icon: "payments" },
+  { id: 15, name: "Remboursements", type: "income", icon: "money-off" },
+  { id: 16, name: "Freelance", type: "income", icon: "work" },
+  { id: 17, name: "Autres revenus", type: "income", icon: "more-horiz" },
+  { id: 18, name: "Assurances", type: "expense", icon: "verified" },
+  { id: 19, name: "Énergie", type: "expense", icon: "bolt" },
+  { id: 20, name: "Internet / Télécom", type: "expense", icon: "wifi" },
+  { id: 21, name: "Taxes", type: "expense", icon: "gavel" },
+  { id: 22, name: "Autre dépense", type: "expense", icon: "more-horiz" },
+];

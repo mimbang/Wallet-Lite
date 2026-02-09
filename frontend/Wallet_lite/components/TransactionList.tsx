@@ -4,22 +4,29 @@ import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { Color, TextType } from "@/constants/Color";
 import { GetSmallTransac } from "@/services/transacation";
 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/fr";
 
+dayjs.extend(relativeTime);
+dayjs.locale("fr");
 
 type Props = {
   period: "day" | "week" | "month";
 };
 const not_foundImg = require("@/assets/background/notfound.png")
 
-export default function TransactionsList({ period }: Props) {
+export default function TransactionsList({ period }:Props) {
 
 
   const [transactions, setTransactions] = useState([]);
-
+  
   useEffect(() => {
+   
     async function load() {
       const data = await GetSmallTransac(period);
       setTransactions(data);
+      console.log(data)
     }
 
     load();
@@ -54,6 +61,8 @@ export default function TransactionsList({ period }: Props) {
           <View style={styles.textContainer}>
             <Text style={{fontSize:18,fontWeight:"bold"}}>{item.title} </Text>
             <Text style={styles.category}>{item.category}</Text>
+            <Text style={styles.category}>{dayjs(item.date).fromNow()}</Text>
+            
           </View>
 
             <View style={{width: 2,height: "80%",backgroundColor: "#000000ff",}}/>

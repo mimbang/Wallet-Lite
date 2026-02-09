@@ -7,7 +7,7 @@ import SimpleCard, { SimpleCardTest, TaxiCircle } from '@/components/IconCircle'
 import PeriodSelector from '@/components/PeriodSelector';
 import TransactionsList from '@/components/TransactionList';
 import { transactionsData } from '@/fake/data';
-import { deleteDatabase, fetchTransactions,  initDB, insertCategory, insertTransaction } from '@/services/database';
+import { deleteDatabase, fetchAllTransactions, FetchCategory, fetchTransactions,  initDB, insertCategory, insertTransaction } from '@/services/database';
 import { getChartData, GetSimpleCardata, GetSmallTransac, QuickInfoData } from '@/services/transacation';
 
 
@@ -35,6 +35,11 @@ export default function HomeScreen() {
   icon: string | null;
   total: number;
 } | null>(null);
+    const [card2, setCard2] = useState<{
+  name: string;
+  icon: string | null;
+  total: number;
+} | null>(null);
 
 const [period, setPeriod] = useState<Period>("month");
 
@@ -58,15 +63,17 @@ const [period, setPeriod] = useState<Period>("month");
 
         }
 
-        const SimpleData = await GetSimpleCardata("Salaire");
+        const SimpleData = await GetSimpleCardata("Internet");
+        const SimpleData2 = await GetSimpleCardata("Shopping");
         const Simpledatavalue = SimpleData
-        setCard(Simpledatavalue)   
+        setCard(Simpledatavalue)  
+        setCard2(SimpleData2) 
         
         const data = await GetSmallTransac(period)
         setTransactions(data)
-      
         
-
+        
+        
       }
       
       load();
@@ -74,6 +81,11 @@ const [period, setPeriod] = useState<Period>("month");
     
     [])
 
+    const dr = async() =>{
+      const test = await FetchCategory();;
+    console.log("test des transac",test)
+    }
+    // dr
   //   useEffect(() => {
   //   async function init() {
   //     // ⚠️ uniquement en dev
@@ -96,32 +108,37 @@ const [period, setPeriod] = useState<Period>("month");
   // }, []);
 
  const add = async () => {
-      await insertCategory("Food", "restaurant", "expense");
-      await insertCategory("Shopping", "shopping-bag", "expense");
-      await insertCategory("Salaire", "briefcase", "income");
-      await insertCategory("Internet", "wifi", "expense");
+  // name: "naname: "Transport", type: "expense", icon: "directions-car"
+      // await insertCategory("Logement", "home", "expense");
+      // await insertCategory("INvestissements", "trending-up", "income");
+      // await insertCategory("Salaire", "attach-money", "income");
+      // await insertCategory("Autre", "more-horiz", "expense");
+      // await insertCategory("Santé", "local-hospital", "expense");
+      // await insertCategory("Loisirs", "sports-esports", "expense");
+      // await insertCategory("Remboursements", "money-off", "income");
+      await insertCategory("Transport", "directions-car", "expense");
+      
 
+      // await insertTransaction({
+    //     amount: 50,
+    //     category_id: 1,
+    //     date: new Date(),
+    //     description:"Achat déjeuner"
 
-      await insertTransaction({
-        amount: 50,
-        category_id: 1,
-        date: new Date().toISOString(),
-        description:"Achat déjeuner"
-
-      });
-      await insertTransaction({
-        amount: 500,
-        category_id: 3,
-        date: new Date().toISOString(),
-        description:"Salaire du mois"
-      });
-      await insertTransaction({
-        amount: 30,
-        category_id: 2,
-        date: new Date().toISOString(),
-        description:"Achat vêtements"
-      });
-      console.log("insertion reussie");
+    //   });
+    //   await insertTransaction({
+    //     amount: 500,
+    //     category_id: 3,
+    //     date: new Date(),
+    //     description:"Salaire du mois"
+    //   });
+    //   await insertTransaction({
+    //     amount: 30,
+    //     category_id: 2,
+    //     date: new Date(),
+    //     description:"Achat vêtements"
+    //   });
+    //   console.log("insertion reussie");
     }
 
     // useEffect(() => {
@@ -175,7 +192,8 @@ const [period, setPeriod] = useState<Period>("month");
                   <View style={{flexDirection:"column"}}>
 
                    <View >
-                    <SimpleCard label="Food" amount={120} iconName="restaurant"/>
+                    {/* <SimpleCard label="Food" amount={120} iconName="restaurant"/> */}
+                    <SimpleCardTest {...card2} />
                    </View>
                    <View style={{ width: "100%", marginVertical: 5,height:2,backgroundColor: "#000000ff", }} />
                    <View >
@@ -185,6 +203,9 @@ const [period, setPeriod] = useState<Period>("month");
                   </View>
 
                 </View>
+                <TouchableOpacity onPress={dr}>
+                  <Text> test</Text>
+                </TouchableOpacity>
 
                
                       <PeriodSelector  period={period}

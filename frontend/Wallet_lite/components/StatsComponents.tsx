@@ -73,7 +73,7 @@ export default function StatsChart({ period}) {
   <BarChart
     data={data}
     width={screenWidth - 32}
-    height={220}
+    height={screenWidth}
     fromZero
     yAxisLabel=""
     yAxisSuffix=""
@@ -87,9 +87,9 @@ export default function StatsChart({ period}) {
     showBarTops
     withInnerLines={false}
         style={{
-          margin: 10,
+          // margin: 10,
           padding:10,
-          marginHorizontal:-10,
+          // marginHorizontal:-10,
           // borderRadius: 8,
           height:"auto",
           width:"100%"

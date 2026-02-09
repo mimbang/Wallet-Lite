@@ -12,7 +12,7 @@ export const openDB = () => {
 
   }
   if (!db) {
-    db = SQLite.openDatabaseSync("wallet_lite.db");
+    db = SQLite.openDatabaseSync(DB_NAME);
   }
   db.execAsync(`
     CREATE TABLE IF NOT EXISTS categories (
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS transactions (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   amount REAL,
   category_id INTEGER,
-  date TEXT,
+  date date,
   description TEXT,
   FOREIGN KEY (category_id) REFERENCES categories(id)
 );
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS transactions (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   amount REAL,
   category_id INTEGER,
-  date TEXT,
+  date date,
   description TEXT,
   FOREIGN KEY (category_id) REFERENCES categories(id)
 );

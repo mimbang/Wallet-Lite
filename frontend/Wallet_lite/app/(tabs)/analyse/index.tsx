@@ -19,7 +19,7 @@ type ChartRow = {
 };
 
 export default function HomeScreen() {
-  const screenWidth = 250 ;
+  const screenWidth = Dimensions.get("window").width ;
   const [period, setPeriod] = useState<Period>("month");
   const [ChartData, setChartdata] = useState({
     labels: [],
