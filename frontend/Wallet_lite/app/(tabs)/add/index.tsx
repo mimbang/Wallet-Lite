@@ -1,6 +1,7 @@
 import { TextType } from "@/constants/Color";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
+import * as Notifications from 'expo-notifications';
 import { Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -11,6 +12,40 @@ import InfoCard from "@/components/InfoCard";
 
 
 export default function AddTransactionPage()  {
+
+
+
+async function initNotifs() {
+  const { status } = await Notifications.requestPermissionsAsync();
+  if (status !== 'granted') return;
+
+  await Notifications.cancelAllScheduledNotificationsAsync();
+
+  const morningMsgs = [
+    "Petit check de ton budget 💸",
+    "Un coup d’œil sur tes comptes ? 👀",
+  ];
+
+  const eveningMsgs = [
+    "Récap finances du jour 📊",
+    "Tu as tout noté aujourd’hui ? 🌙",
+  ];
+
+  const rand = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+  await Notifications.scheduleNotificationAsync({
+    content: { title: "Finances", body: rand(morningMsgs) },
+    trigger: { hour: 9, minute: 0, repeats: true },
+  });
+
+  await Notifications.scheduleNotificationAsync({
+    content: { title: "Finances", body: rand(eveningMsgs) },
+    trigger: { hour: 21, minute: 0, repeats: true },
+  });
+}
+
+
+
 
     const router = useRouter();
     const [amount,setAmount] = useState("");

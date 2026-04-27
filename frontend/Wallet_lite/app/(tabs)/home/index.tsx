@@ -9,6 +9,7 @@ import TransactionsList from '@/components/TransactionList';
 import { transactionsData } from '@/fake/data';
 import { deleteDatabase, fetchAllTransactions, FetchCategory, fetchTransactions,  initDB, insertCategory, insertTransaction } from '@/services/database';
 import { getChartData, GetSimpleCardata, GetSmallTransac, QuickInfoData } from '@/services/transacation';
+import { Notif } from '@/components/NOTIF';
 
 
 export type Transaction = {
@@ -206,6 +207,7 @@ const [period, setPeriod] = useState<Period>("month");
                 <TouchableOpacity onPress={dr}>
                   <Text> test</Text>
                 </TouchableOpacity>
+                {/* <Notif/> */}
 
                
                       <PeriodSelector  period={period}
