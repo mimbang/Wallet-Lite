@@ -21,8 +21,8 @@ export const styles = StyleSheet.create({
 
     // justifyContent:"center",
     alignItems:"center",
-    borderTopLeftRadius: "20%",
-    borderTopRightRadius: "15%",
+    // borderTopLeftRadius: "8%",
+    // borderTopRightRadius: "8%",
     // paddingTop: 20,
     
   },

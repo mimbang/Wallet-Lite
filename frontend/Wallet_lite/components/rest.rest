@@ -1,0 +1,7 @@
+PUT http://192.168.132.2:8000/clients/21860e9e-6f14-43ef-bdd5-e5e6c243747a
+Content-Type: application/json
+
+{
+   "gender": "homme"
+  
+}
